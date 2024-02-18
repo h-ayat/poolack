@@ -1,0 +1,28 @@
+openapi: "3.0.0"
+info:
+  title: issues endpoints documentation
+  version: Unspecified
+paths:
+  /api/issues/add:
+    post:
+      operationId: add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoGroup_Issue"
+      responses:
+        '200':
+          description: ''
+components:
+  schemas:
+    TodoGroup_Issue:
+      type: object
+      required:
+      - id
+      - text
+      properties:
+        id:
+          type: string
+        text:
+          type: string

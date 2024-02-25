@@ -10,13 +10,13 @@ import dive.poolack.Issue
 import JsonSupport.issueFormat
 import dive.poolack.api.IssueApi
 
-object MainRouter {
+class MainRouter (api: IssueApi){
 
   private val apiRoute: Route = pathPrefix("api" / "issues") {
     path("add") {
       post {
         entity(as[Issue]) { body =>
-          val result = IssueApi.addIssue(body)
+          val result = api.addIssue(body)
           onComplete(result) { size =>
             complete("Ok, dbSize: " + size)
           }

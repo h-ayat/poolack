@@ -1,14 +1,15 @@
 package dive.poolack.api
 
 import dive.poolack.Issue
-import dive.poolack.persist.IssueRepo
+import dive.poolack.persist.memory.MemoryIssueRepo
 import akka.compat.Future
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
+import dive.poolack.persist.api.IssueRepo
 
-object IssueApi {
-  
-  def addIssue(issue: Issue)(implicit ec: ExecutionContext): Future[Int] = {
-    IssueRepo.insertIssue(issue)
+class IssueApi(repo: IssueRepo) {
+
+  def addIssue(issue: Issue)(implicit ec: ExecutionContext): Future[Unit] = {
+    repo.insert(issue)
   }
 }

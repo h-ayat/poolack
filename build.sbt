@@ -8,3 +8,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.21",
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.2.10"
 )
+
+libraryDependencies += "org.reactivemongo" %% "reactivemongo" % "1.0.10"
+
+
+
+libraryDependencies += "org.slf4j" % "slf4j-simple" % "2.0.12"

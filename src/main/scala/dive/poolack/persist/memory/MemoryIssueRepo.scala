@@ -16,7 +16,7 @@ object MemoryIssueRepo extends IssueRepo {
 
   def insert(issue: Issue)(implicit ec: ExecutionContext): Future[Unit] = {
     this.synchronized {
-      data.put(issue.id, issue)
+      data.put(issue._id, issue)
     }
 
     data.foreach(println)

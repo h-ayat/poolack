@@ -8,18 +8,18 @@ import spray.json.DefaultJsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import dive.poolack.Issue
 import JsonSupport.issueFormat
-import dive.poolack.api.IssueApi
 
-class MainRouter (api: IssueApi){
+class MainRouter (){
 
   private val apiRoute: Route = pathPrefix("api" / "issues") {
     path("add") {
       post {
         entity(as[Issue]) { body =>
-          val result = api.addIssue(body)
-          onComplete(result) { size =>
-            complete("Ok, dbSize: " + size)
-          }
+          // val result = api.addIssue(body)
+          // onComplete(result) { size =>
+          //   complete("Ok, dbSize: " + size)
+          // }
+          ???
         }
       }
     }

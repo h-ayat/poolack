@@ -12,5 +12,8 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.reactivemongo" %% "reactivemongo" % "1.0.10"
 
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.18" % Test
+
+
 
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "2.0.12"

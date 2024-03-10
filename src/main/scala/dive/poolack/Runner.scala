@@ -12,7 +12,7 @@ object Runner {
   private val connector = new Connector()
   def main(args: Array[String]): Unit = {
 
-    val connector = new Connector()
+    val connector: Connector = new Connector()
     val repo = new MongoIssueRepo(connector)
     val mainRoutes: Route = new MainRouter().route
     implicit val system = ActorSystem("poolack-http-system")

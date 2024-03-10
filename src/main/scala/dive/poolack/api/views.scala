@@ -1,9 +1,13 @@
 package dive.poolack.api
 
-final case class IssueId(value: String) extends AnyVal
-final case class LabelId(value: String) extends AnyVal
-final case class UserId(value: String) extends AnyVal
-final case class TaskId(value: String) extends AnyVal
+trait Id extends Any {
+  def value: String
+}
+
+final case class IssueId(value: String) extends AnyVal with Id
+final case class LabelId(value: String) extends AnyVal with Id
+final case class UserId(value: String) extends AnyVal with Id
+final case class TaskId(value: String) extends AnyVal with Id
 
 sealed trait IssueState
 object IssueState {

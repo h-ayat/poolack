@@ -1,4 +1,4 @@
-scalaVersion := "2.13.11"
+scalaVersion := "2.13.13"
 
 organization := "dive"
 name := "poolack"

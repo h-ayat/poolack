@@ -8,16 +8,9 @@ import akka.http.scaladsl.server.Route
 import dive.poolack.persist.mongodb.MongoIssueRepo
 
 object Runner {
-
-  private val connector = new Connector()
   def main(args: Array[String]): Unit = {
-
-    val connector: Connector = new Connector()
-    val repo = new MongoIssueRepo(connector)
-    val mainRoutes: Route = new MainRouter().route
     implicit val system = ActorSystem("poolack-http-system")
-    val bindingFuture = Http().newServerAt("0.0.0.0", 8080).bind(mainRoutes)
+    val bindingFuture = Http().newServerAt("0.0.0.0", 8080).bind(MainRouter.route)
     println("Server Running")
-
   }
 }

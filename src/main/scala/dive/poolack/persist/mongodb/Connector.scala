@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 import reactivemongo.api.DB
 import reactivemongo.api.bson.BSONDocument
 
-class Connector {
+object Connector {
 
   private val db: DB = {
     println("Connecting")

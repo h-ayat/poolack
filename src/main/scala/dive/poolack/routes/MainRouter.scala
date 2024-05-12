@@ -4,22 +4,37 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 
-import spray.json.DefaultJsonProtocol._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import dive.poolack.Issue
-import JsonSupport.issueFormat
+import spray.json._
 
-class MainRouter (){
+import dive.poolack.Issue
+import dive.poolack.persist.mongodb.MongoIssueRepo
+import dive.poolack.api.NewIssue
+import dive.poolack.api.NewIssueJsonSupport
+
+import NewIssue.Param
+import dive.poolack.logic.IssueLogic
+import scala.util.Success
+import scala.util.Failure
+import akka.http.scaladsl.model.StatusCodes
+import org.slf4j.LoggerFactory
+import dive.poolack.api.IssueId
+import dive.poolack.util.IO
+import akka.http.scaladsl.server.{RequestContext, RouteResult}
+import scala.concurrent.Future
+
+object MainRouter {
+
+  private val log = LoggerFactory.getLogger(getClass)
+
+  import NewIssueJsonSupport.{resultHandler, paramHandler}
+  import NewIssueJsonSupport.ErrorSupport.errorFormat
 
   private val apiRoute: Route = pathPrefix("api" / "issues") {
-    path("add") {
+    path("add") { //     POST /api/issues/add
       post {
-        entity(as[Issue]) { body =>
-          // val result = api.addIssue(body)
-          // onComplete(result) { size =>
-          //   complete("Ok, dbSize: " + size)
-          // }
-          ???
+        entity(as[Param]) { body =>
+          ioComplete(body, IssueLogic.newIssue(body))
         }
       }
     }
@@ -39,5 +54,26 @@ class MainRouter (){
 
   val route: Route =
     apiRoute ~ docRouter
+
+  private def ioComplete[P, E, A](
+      param: P,
+      io: IO[E, A]
+  )(implicit eFormat: RootJsonFormat[E], aFormat: RootJsonFormat[A]): Route = {
+    onComplete(io.future) {
+      case Success(Right(value)) =>
+        complete(value)
+
+      case Success(Left(fail)) =>
+        complete(status = StatusCodes.BadRequest, fail)
+
+      case Failure(ex) =>
+        ex.printStackTrace()
+        log.error(s"Failed to process $param due to ", ex)
+        complete(
+          status = StatusCodes.InternalServerError,
+          "Failed to execute"
+        )
+    }
+  }
 
 }

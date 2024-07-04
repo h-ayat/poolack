@@ -52,8 +52,19 @@ object MainRouter {
         }
       }
 
+  private val tester = pathPrefix("test") {
+    path("500") {
+      throw new Exception("ok")
+    } ~ path("400") {
+      // complete(status
+      complete(status = StatusCodes.BadRequest, "")
+    } ~ path("307") {
+      complete(status = StatusCodes.TemporaryRedirect, "")
+    }
+  }
+
   val route: Route =
-    apiRoute ~ docRouter
+    apiRoute ~ docRouter ~ tester
 
   private def ioComplete[P, E, A](
       param: P,

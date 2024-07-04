@@ -1,4 +1,4 @@
-scalaVersion := "2.13.13"
+scalaVersion := "2.13.10"
 
 organization := "dive"
 name := "poolack"
@@ -17,3 +17,6 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.18" % Test
 
 
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "2.0.12"
+
+enablePlugins(JavaAppPackaging)
+

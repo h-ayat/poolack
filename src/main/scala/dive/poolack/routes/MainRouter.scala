@@ -31,6 +31,11 @@ object MainRouter {
   import NewIssueJsonSupport.ErrorSupport.errorFormat
 
   private val apiRoute: Route = pathPrefix("api" / "issues") {
+    path("test") {
+
+      log.warn("In call shod")
+      complete("ok")
+    } ~
     path("add") { //     POST /api/issues/add
       post {
         entity(as[Param]) { body =>

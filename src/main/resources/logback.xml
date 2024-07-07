@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%date %-5level %logger{10} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="akka" level="INFO" />
+
+    <root level="DEBUG">
+        <appender-ref ref="consoleAppender" />
+    </root>
+</configuration>
+
